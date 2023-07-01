@@ -1,0 +1,71 @@
+
+<%@page import="java.sql.*"%>
+<%@page import="java.sql.Connection"%>
+<%@page import="java.sql.DriverManager"%>
+<%@page import="java.io.*"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>insert</title>
+    </head>
+    <body>
+       <% 
+             String name=request.getParameter("name"); 
+              String email=request.getParameter("email");
+              int row;
+            try{
+                Class.forName("com.mysql.jdbc.Driver");
+                Connection con=DriverManager.getConnection("jdbc:mysql://localhost:3306/jsp","root","mysql");
+                PreparedStatement pre=con.prepareStatement("insert into operation value(?,?)");
+                pre.setString(1,name);
+                pre.setString(2,email);
+                 row=pre.executeUpdate();
+                 if(row>0){
+                 out.println("Data ADDED Successfully");
+            }
+            else{
+           out.println("Data is not added successfullu");
+           }
+               
+                
+           }
+            catch(Exception e){
+            System.out.println(e);
+           }
+           
+          
+       %>
+       
+       
+    </body>
+</html>
+
+
+
+
+
+next..
+
+
+ protected void processRequest(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException, ClassNotFoundException, SQLException {
+       String name=request.getParameter("name");
+           String number=request.getParameter("number");
+        try{
+            /* TODO output your page here. You may use following sample code. */
+             Class.forName("com.mysql.jdbc.Driver");
+            Connection con = DriverManager.getConnection("jdbc:mysql://localhost:3306/student", "root", "mysql");
+            PreparedStatement ps = con.prepareStatement("insert into dyno values(?,?)");
+            ps.setString(1, name);
+            ps.setString(2, number);
+            ps.executeUpdate();
+            response.sendRedirect("login2.jsp");
+            
+        }
+        catch(IOException | ClassNotFoundException | SQLException e){
+        System.out.println(e);
+    }
+
+    }
